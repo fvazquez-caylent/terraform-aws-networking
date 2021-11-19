@@ -23,13 +23,15 @@ module "endpoints" {
 }
 
 resource "aws_security_group" "interface_endpoint" {
+  name        = format("%s-%s", var.name_prefix, "interface-endpoint-sg")
   description = "Sec Group created to be attached into interface Endpoint for Tamr EMR, it allows TCP traffic between the Tamr VM subnet and EMR cluster."
+  vpc_id      = module.vpc.vpc_id
 
-  ingress = [ {
-    cidr_blocks = [ var.application_subnet_cidr_block ]
+  ingress {
     description = "EMR API"
     from_port = 443
     to_port = 443
     protocol = "TCP"
-  } ]
+    cidr_blocks = [ var.application_subnet_cidr_block ]
+   } 
 }
