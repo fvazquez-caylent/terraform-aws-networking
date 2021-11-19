@@ -36,7 +36,6 @@ variable "load_balancing_subnets_cidr_blocks" {
   default     = ["0.0.0.0/0", "0.0.0.0/0"]
 }
 
-
 variable "availability_zones" {
   type        = list(string)
   description = "The list of availability zones where we should deploy resources"
@@ -79,4 +78,9 @@ variable "tamr_unify_port" {
 variable "name_prefix" {
   type        = string
   description = "A prefix to add to the names of all created resources."
+}
+
+variable "interface_endpoint_ingress_sg" {
+  type        = string
+  description = "Security groups ingress to associate with the interface endpoint"
 }
