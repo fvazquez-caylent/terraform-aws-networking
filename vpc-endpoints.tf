@@ -32,7 +32,6 @@ resource "aws_security_group" "interface_endpoint" {
     from_port = 443
     to_port = 443
     protocol = "TCP"
-    #cidr_blocks = [ var.application_subnet_cidr_block ]
     security_groups = [var.interface_endpoint_ingress_sg]
   } 
 }
