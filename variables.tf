@@ -82,5 +82,5 @@ variable "name_prefix" {
 
 variable "interface_endpoint_ingress_sg" {
   type        = string
-  description = "Security groups ingress to associate with the interface endpoint"
+  description = "Application Security group ID to associate with the interface endpoint as allowed ingress traffic."
 }
