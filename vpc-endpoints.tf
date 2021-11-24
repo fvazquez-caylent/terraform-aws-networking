@@ -24,7 +24,7 @@ module "endpoints" {
 
 resource "aws_security_group" "interface_endpoint" {
   name        = format("%s-%s", var.name_prefix, "interface-endpoint-sg")
-  description = "Sec Group created to be attached into interface Endpoint for Tamr EMR, it allows TCP traffic between the Tamr VM subnet and EMR cluster."
+  description = "Security Group created to be attached into interface Endpoint for EMR. It allows TCP traffic between to the EMR service."
   vpc_id      = module.vpc.vpc_id
 
   ingress {
@@ -34,4 +34,5 @@ resource "aws_security_group" "interface_endpoint" {
     protocol        = "TCP"
     security_groups = [var.interface_endpoint_ingress_sg]
   }
+  tags = var.tags
 }
