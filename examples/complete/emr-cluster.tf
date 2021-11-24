@@ -55,7 +55,7 @@ module "emr" {
   core_instance_fleet_name      = format("%s-%s", "example-complete", "-CoreInstanceFleet")
   emr_managed_master_sg_name    = format("%s-%s", "example-complete", "-EMR-Master")
   emr_managed_core_sg_name      = format("%s-%s", "example-complete", "-EMR-Core")
-  #emr_service_access_sg_name    = format("%s-%s", "example-complete", "-EMR-Service-Access")
+  emr_service_access_sg_name    = format("%s-%s", "example-complete", "-EMR-Service-Access")
 
   # Scale
   master_instance_on_demand_count = 1
