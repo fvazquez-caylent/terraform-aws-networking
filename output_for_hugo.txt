@@ -1,0 +1,911 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create
+ [36m<=[0m read (data resources)
+[0m
+Terraform will perform the following actions:
+
+[1m  # data.aws_route_table.application_subnet_rt[0m will be read during apply
+  # (config refers to values not yet known)[0m[0m
+[0m [36m<=[0m[0m data "aws_route_table" "application_subnet_rt"  {
+      [32m+[0m [0m[1m[0marn[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0massociations[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0mgateway_id[0m[0m     = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mroutes[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m         = (known after apply)
+    }
+
+[1m  # data.aws_subnet.application_subnet[0m will be read during apply
+  # (config refers to values not yet known)[0m[0m
+[0m [36m<=[0m[0m data "aws_subnet" "application_subnet"  {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mavailable_ip_address_count[0m[0m      = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = (known after apply)
+      [32m+[0m [0m[1m[0mcustomer_owned_ipv4_pool[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mdefault_for_az[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block[0m[0m                 = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_customer_owned_ip_on_launch[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0moutpost_arn[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mstate[0m[0m                           = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # aws_network_acl.application_subnet[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_network_acl" "application_subnet" {
+      [32m+[0m [0m[1m[0marn[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0megress[0m[0m     = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 300
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 443
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 401
+              [32m+[0m [0mto_port         = 443
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 100
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m    = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 9100
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 310
+              [32m+[0m [0mto_port         = 9100
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 101
+              [32m+[0m [0mto_port         = 0
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.141.102.208/28"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 420
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.141.102.224/28"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 421
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.5.128.0/22"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 422
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.5.132.0/23"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 423
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.141.0/24"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 424
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.142.0/24"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 425
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.143.0/24"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 426
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.176.0/22"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 427
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.80.0/20"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 428
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.96.0/20"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 429
+              [32m+[0m [0mto_port         = 65535
+            },
+        ]
+      [32m+[0m [0m[1m[0mowner_id[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m     = (known after apply)
+    }
+
+[1m  # aws_network_acl.compute_subnet[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_network_acl" "compute_subnet" {
+      [32m+[0m [0m[1m[0marn[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0megress[0m[0m     = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 443
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 201
+              [32m+[0m [0mto_port         = 443
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 80
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 200
+              [32m+[0m [0mto_port         = 80
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 100
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m    = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 101
+              [32m+[0m [0mto_port         = 0
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.141.102.208/28"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 220
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.141.102.224/28"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 221
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.5.128.0/22"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 222
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "3.5.132.0/23"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 223
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.141.0/24"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 224
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.142.0/24"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 225
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.143.0/24"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 226
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.176.0/22"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 227
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.80.0/20"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 228
+              [32m+[0m [0mto_port         = 65535
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "52.219.96.0/20"
+              [32m+[0m [0mfrom_port       = 1024
+              [32m+[0m [0micmp_code       = [90mnull[0m[0m
+              [32m+[0m [0micmp_type       = [90mnull[0m[0m
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "tcp"
+              [32m+[0m [0mrule_no         = 229
+              [32m+[0m [0mto_port         = 65535
+            },
+        ]
+      [32m+[0m [0m[1m[0mowner_id[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m     = (known after apply)
+    }
+
+[1m  # aws_network_acl.data_subnets[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_network_acl" "data_subnets" {
+      [32m+[0m [0m[1m[0marn[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0megress[0m[0m     = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 100
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m    = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 101
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mowner_id[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m     = (known after apply)
+    }
+
+[1m  # aws_network_acl.load_balancing_subnets[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_network_acl" "load_balancing_subnets" {
+      [32m+[0m [0m[1m[0marn[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0megress[0m[0m     = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 100
+              [32m+[0m [0mto_port         = 0
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 200
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m    = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 110
+              [32m+[0m [0mto_port         = 0
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 201
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mowner_id[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m     = (known after apply)
+    }
+
+[1m  # aws_network_acl.public_subnets[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_network_acl" "public_subnets" {
+      [32m+[0m [0m[1m[0marn[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0megress[0m[0m     = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 100
+              [32m+[0m [0mto_port         = 0
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 200
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m    = [
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "0.0.0.0/0"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 110
+              [32m+[0m [0mto_port         = 0
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0maction          = "allow"
+              [32m+[0m [0mcidr_block      = "10.0.0.0/16"
+              [32m+[0m [0mfrom_port       = 0
+              [32m+[0m [0micmp_code       = 0
+              [32m+[0m [0micmp_type       = 0
+              [32m+[0m [0mipv6_cidr_block = ""
+              [32m+[0m [0mprotocol        = "-1"
+              [32m+[0m [0mrule_no         = 201
+              [32m+[0m [0mto_port         = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mowner_id[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m     = (known after apply)
+    }
+
+[1m  # aws_route_table_association.compute_subnet_rta[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "compute_subnet_rta" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # aws_security_group.interface_endpoint[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_security_group" "interface_endpoint" {
+      [32m+[0m [0m[1m[0marn[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mdescription[0m[0m            = "Sec Group created to be attached into interface Endpoint for Tamr EMR, it allows TCP traffic between the Tamr VM subnet and EMR cluster."
+      [32m+[0m [0m[1m[0megress[0m[0m                 = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m                = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"10.0.1.0/24",
+                ]
+              [32m+[0m [0mdescription      = "EMR API"
+              [32m+[0m [0mfrom_port        = 443
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 443
+            },
+        ]
+      [32m+[0m [0m[1m[0mname[0m[0m                   = "tamr-vpc-poc-interface-endpoint-sg"
+      [32m+[0m [0m[1m[0mname_prefix[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mrevoke_rules_on_delete[0m[0m = false
+      [32m+[0m [0m[1m[0mtags_all[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                 = (known after apply)
+    }
+
+[1m  # aws_subnet.compute_subnet[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "compute_subnet" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.2.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.endpoints.aws_vpc_endpoint.this["elasticmapreduce"][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "this" {
+      [32m+[0m [0m[1m[0marn[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_blocks[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdns_entry[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mnetwork_interface_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mpolicy[0m[0m                = (known after apply)
+      [32m+[0m [0m[1m[0mprefix_list_id[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_dns_enabled[0m[0m   = true
+      [32m+[0m [0m[1m[0mrequester_managed[0m[0m     = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_ids[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0msecurity_group_ids[0m[0m    = (known after apply)
+      [32m+[0m [0m[1m[0mservice_name[0m[0m          = "com.amazonaws.us-east-2.elasticmapreduce"
+      [32m+[0m [0m[1m[0mstate[0m[0m                 = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                  = {
+          [32m+[0m [0m"Name" = "tamr-vpc-poc-emr-interface-endpoint"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m              = {
+          [32m+[0m [0m"Name" = "tamr-vpc-poc-emr-interface-endpoint"
+        }
+      [32m+[0m [0m[1m[0mvpc_endpoint_type[0m[0m     = "Interface"
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                = (known after apply)
+
+      [32m+[0m [0mtimeouts {
+          [32m+[0m [0m[1m[0mcreate[0m[0m = "10m"
+          [32m+[0m [0m[1m[0mdelete[0m[0m = "10m"
+          [32m+[0m [0m[1m[0mupdate[0m[0m = "10m"
+        }
+    }
+
+[1m  # module.endpoints.aws_vpc_endpoint.this["s3"][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "this" {
+      [32m+[0m [0m[1m[0marn[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_blocks[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdns_entry[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mnetwork_interface_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mpolicy[0m[0m                = (known after apply)
+      [32m+[0m [0m[1m[0mprefix_list_id[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_dns_enabled[0m[0m   = false
+      [32m+[0m [0m[1m[0mrequester_managed[0m[0m     = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_ids[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0msecurity_group_ids[0m[0m    = (known after apply)
+      [32m+[0m [0m[1m[0mservice_name[0m[0m          = "com.amazonaws.us-east-2.s3"
+      [32m+[0m [0m[1m[0mstate[0m[0m                 = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                  = {
+          [32m+[0m [0m"Name" = "tamr-vpc-poc-s3-vpc-endpoint"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m              = {
+          [32m+[0m [0m"Name" = "tamr-vpc-poc-s3-vpc-endpoint"
+        }
+      [32m+[0m [0m[1m[0mvpc_endpoint_type[0m[0m     = "Gateway"
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                = (known after apply)
+
+      [32m+[0m [0mtimeouts {
+          [32m+[0m [0m[1m[0mcreate[0m[0m = "10m"
+          [32m+[0m [0m[1m[0mdelete[0m[0m = "10m"
+          [32m+[0m [0m[1m[0mupdate[0m[0m = "10m"
+        }
+    }
+
+[1m  # module.vpc.aws_route_table.intra[0][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table" "intra" {
+      [32m+[0m [0m[1m[0marn[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mpropagating_vgws[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mroute[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m             = {
+          [32m+[0m [0m"Name" = "tamr-vpc-intra"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m         = {
+          [32m+[0m [0m"Name" = "tamr-vpc-intra"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table.private[0][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table" "private" {
+      [32m+[0m [0m[1m[0marn[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mpropagating_vgws[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mroute[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m             = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m         = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table.private[1][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table" "private" {
+      [32m+[0m [0m[1m[0marn[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mpropagating_vgws[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mroute[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m             = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2b"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m         = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2b"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table.private[2][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table" "private" {
+      [32m+[0m [0m[1m[0marn[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mpropagating_vgws[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mroute[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m             = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m         = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.intra[0][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "intra" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.intra[1][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "intra" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.private[0][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.private[1][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_route_table_association.private[2][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.intra[0][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "intra" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-2a"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.3.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name" = "tamr-vpc-intra-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name" = "tamr-vpc-intra-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.intra[1][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "intra" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-2b"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.4.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name" = "tamr-vpc-intra-us-east-2b"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name" = "tamr-vpc-intra-us-east-2b"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.private[0][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "private" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-2a"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "10.0.1.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.private[1][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "private" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-2b"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "0.0.0.0/0"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2b"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2b"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.vpc.aws_subnet.private[2][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "private" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-2a"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "0.0.0.0/0"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name" = "tamr-vpc-private-us-east-2a"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.vpc.aws_vpc.this[0][0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_vpc" "this" {
+      [32m+[0m [0m[1m[0marn[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0massign_generated_ipv6_cidr_block[0m[0m = false
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                       = "10.0.0.0/16"
+      [32m+[0m [0m[1m[0mdefault_network_acl_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdefault_route_table_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdefault_security_group_id[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mdhcp_options_id[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0menable_classiclink[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0menable_classiclink_dns_support[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0menable_dns_hostnames[0m[0m             = true
+      [32m+[0m [0m[1m[0menable_dns_support[0m[0m               = true
+      [32m+[0m [0m[1m[0mid[0m[0m                               = (known after apply)
+      [32m+[0m [0m[1m[0minstance_tenancy[0m[0m                 = "default"
+      [32m+[0m [0m[1m[0mipv6_association_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mmain_route_table_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                         = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                             = {
+          [32m+[0m [0m"Name" = "tamr-vpc"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                         = {
+          [32m+[0m [0m"Name" = "tamr-vpc"
+        }
+    }
+
+[0m[1mPlan:[0m 25 to add, 0 to change, 0 to destroy.
+[0m[0m
+[1mChanges to Outputs:[0m[0m
+  [32m+[0m [0m[1m[0mapplication_subnet_cidr_block[0m[0m = "10.0.1.0/24"
+  [32m+[0m [0m[1m[0mapplication_subnet_id[0m[0m         = (known after apply)
+  [32m+[0m [0m[1m[0mcompute_subnet_id[0m[0m             = (known after apply)
+  [32m+[0m [0m[1m[0mdata_subnet_ids[0m[0m               = [
+      [32m+[0m [0m(known after apply),
+      [32m+[0m [0m(known after apply),
+    ]
+  [32m+[0m [0m[1m[0mload_balancing_subnet_ids[0m[0m     = [
+      [32m+[0m [0m(known after apply),
+      [32m+[0m [0m(known after apply),
+    ]
+  [32m+[0m [0m[1m[0mpublic_subnet_ids[0m[0m             = []
+  [32m+[0m [0m[1m[0mtamr_ec2_availability_zone[0m[0m    = "us-east-2a"
+  [32m+[0m [0m[1m[0mvpc_cidr_block[0m[0m                = "10.0.0.0/16"
+  [32m+[0m [0m[1m[0mvpc_id[0m[0m                        = (known after apply)
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
