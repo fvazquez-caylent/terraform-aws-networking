@@ -31,13 +31,13 @@ Includes the following resources:
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13 |
-| aws | >= 3.36 |
+| aws | >= 3.36, < 4.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.36 |
+| aws | >= 3.36, < 4.0.0 |
 
 ## Inputs
 
