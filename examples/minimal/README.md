@@ -28,7 +28,9 @@ No provider.
 | create\_public\_subnets | Enable the creation of public subnets for internet facing resources | `bool` | `false` | no |
 | enable\_nat\_gateway | Enable the creation of a NAT gateway | `bool` | `false` | no |
 | ingress\_cidr\_blocks | The cidr range that will be accessing the tamr vm | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| load\_balancing\_subnets\_cidr\_blocks | The load\_balancing subnets' CIDR range | `list(string)` | <pre>[<br>  "0.0.0.0/0",<br>  "0.0.0.0/0"<br>]</pre> | no |
 | name\_prefix | n/a | `string` | `"tamr-"` | no |
+| public\_subnets\_cidr\_blocks | The public subnets' CIDR range | `list(string)` | <pre>[<br>  "0.0.0.0/0",<br>  "0.0.0.0/0"<br>]</pre> | no |
 | tags | A map of tags to add to all resources. | `map(string)` | <pre>{<br>  "Name": "tamr-vpc",<br>  "Terraform": "true",<br>  "application": "tamr"<br>}</pre> | no |
 
 ## Outputs

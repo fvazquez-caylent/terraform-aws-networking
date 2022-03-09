@@ -53,6 +53,14 @@ func validateNetwork(t *testing.T, terraformOptions *terraform.Options, awsRegio
 			assert.Contains(t, outputs["tamr_ec2_availability_zone"], subnet.AvailabilityZone)
 		}
 	})
+
+	if outputs["load_balancing_subnet_ids"] != nil {
+		t.Run("check_loadbalancer_is_not_public", func(t *testing.T) {
+			for _, subnet := range outputs["load_balancing_subnet_ids"].([]interface{}) {
+				assert.False(t, aws.IsPublicSubnet(t, subnet.(string), awsRegion))
+			}
+		})
+	}
 }
 
 // getAllSubnetsOutput receives the outputs map and appends all values of subnet_id into one sorted list of strings
