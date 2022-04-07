@@ -25,6 +25,14 @@ module "endpoints" {
       private_dns_enabled = true
       security_group_ids  = [aws_security_group.logs_interface_endpoint.id]
       subnet_ids          = [module.vpc.private_subnets[0]]
+    },
+    kms = {
+      service_type        = "Interface"
+      service             = "kms"
+      tags                = { Name = format("%s-%s", var.name_prefix, "kms-interface-endpoint") }
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.kms_interface_endpoint.id]
+      subnet_ids          = [aws_subnet.compute_subnet.id]
     }
   }
   tags = var.tags
@@ -55,6 +63,22 @@ resource "aws_security_group" "logs_interface_endpoint" {
     to_port     = 443
     protocol    = "TCP"
     cidr_blocks = [var.compute_subnet_cidr_block, var.application_subnet_cidr_block]
+  }
+  tags = var.tags
+}
+
+# Creates KMS VPC Endpoint Security Group
+resource "aws_security_group" "kms_interface_endpoint" {
+  name        = format("%s-%s", var.name_prefix, "kms-interface-endpoint-sg")
+  description = "Security Group to be attached to the KMS Endpoint interface, which allows TCP traffic to the KMS service."
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "KMS API"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "TCP"
+    cidr_blocks = [var.compute_subnet_cidr_block]
   }
   tags = var.tags
 }
