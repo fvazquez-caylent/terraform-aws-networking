@@ -10,7 +10,7 @@ data "aws_availability_zones" "available" {
 data "aws_ami" "tamr-vm" {
   most_recent = true
   owners      = ["679593333241"]
-  name_regex  = "^Ubuntu 18.04 Tamr.*"
+  name_regex  = "ami-[a-z0-9]*-with-tamr-v202[0-9]*-[0-9]*gb-[0-9]*-no-license-.*"
   filter {
     name   = "product-code"
     values = ["832nkbrayw00cnivlh6nbbi6p"]
@@ -47,7 +47,7 @@ module "sg_vm_web" {
 }
 
 module "tamr-vm" {
-  source                      = "git::git@github.com:Datatamer/terraform-aws-tamr-vm.git?ref=3.2.0"
+  source                      = "git::git@github.com:Datatamer/terraform-aws-tamr-vm.git?ref=4.4.2"
   aws_role_name               = format("%s-tamr-ec2-role", var.name_prefix)
   aws_instance_profile_name   = format("%s-tamr-ec2-instance-profile", var.name_prefix)
   aws_emr_creator_policy_name = format("%sEmrCreatorPolicy", var.name_prefix)
