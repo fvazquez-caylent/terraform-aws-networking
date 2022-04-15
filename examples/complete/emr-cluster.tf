@@ -82,7 +82,7 @@ module "sg-ports" {
 }
 
 module "aws-emr-sg-master" {
-  source                  = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.2.0"
+  source                  = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
   vpc_id                  = module.tamr_networking.vpc_id
   ingress_cidr_blocks     = var.ingress_cidr_blocks
   ingress_security_groups = module.sg_vm_web.security_group_ids
@@ -93,7 +93,7 @@ module "aws-emr-sg-master" {
 }
 
 module "aws-emr-sg-core" {
-  source                  = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.2.0"
+  source                  = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
   vpc_id                  = module.tamr_networking.vpc_id
   ingress_cidr_blocks     = var.ingress_cidr_blocks
   ingress_security_groups = module.sg_vm_web.security_group_ids
@@ -104,7 +104,7 @@ module "aws-emr-sg-core" {
 }
 
 module "aws-emr-sg-service-access" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.2.0"
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
   vpc_id              = module.tamr_networking.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks  = var.egress_cidr_blocks
