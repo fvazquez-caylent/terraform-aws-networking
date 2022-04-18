@@ -4,7 +4,7 @@ locals {
 
 # Set up logs bucket with read/write permissions
 module "emr-logs-bucket" {
-  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.0"
+  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
   bucket_name = var.bucket_name_for_logs
   read_write_actions = [
     "s3:HeadBucket",
@@ -16,7 +16,7 @@ module "emr-logs-bucket" {
 
 # Set up root directory bucket
 module "emr-rootdir-bucket" {
-  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.0"
+  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
   tags             = var.tags
@@ -28,7 +28,7 @@ module "emr" {
   depends_on = [
     module.tamr_networking
   ]
-  source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=7.1.0"
+  source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=7.3.1"
   # Configurations
   create_static_cluster = true
   release_label         = "emr-5.29.0" # spark 2.4.4
@@ -76,7 +76,7 @@ module "emr" {
 }
 
 module "sg-ports" {
-  source = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.2.0"
+  source = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=7.3.1"
   #source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }

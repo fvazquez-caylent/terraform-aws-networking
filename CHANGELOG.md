@@ -1,8 +1,12 @@
 # Tamr Terraform AWS Networking Repo
 
+## v1.2.0 - April 7th 2022
+* Adds KMS VPC Interface Endpoint.
+
 ## v1.1.2 - April 5th 2022
 * Forces dependency between route table datasource and vpc module.
 * Adds conditional creation of Public and Load Balancing subnets nacls.
+
 ## v1.1.1 - February 7th 2022
 * Adds application subnet cidr block (Tamr VM subnet cidr block) as allowed cidr block for ingress traffic in the security group for the Cloudwatch Interface Endpoint.
 
