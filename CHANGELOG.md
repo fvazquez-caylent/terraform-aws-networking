@@ -1,5 +1,8 @@
 # Tamr Terraform AWS Networking Repo
 
+## v1.2.1 - April 21st 2022
+* Updates minimal required terraform version.
+
 ## v1.2.0 - April 7th 2022
 * Adds KMS VPC Interface Endpoint.
 
