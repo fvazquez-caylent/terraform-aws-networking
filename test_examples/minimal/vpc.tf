@@ -4,7 +4,7 @@ module "tamr_networking" {
   name_prefix                        = var.name_prefix
   ingress_cidr_blocks                = var.ingress_cidr_blocks
   vpc_cidr_block                     = var.vpc_cidr_block
-  data_subnet_cidr_blocks            = var.data_subnet_cidr_blocks
+  data_subnets_cidr_blocks           = var.data_subnets_cidr_blocks
   application_subnet_cidr_block      = var.application_subnet_cidr_block
   compute_subnet_cidr_block          = var.compute_subnet_cidr_block
   load_balancing_subnets_cidr_blocks = var.load_balancing_subnets_cidr_blocks

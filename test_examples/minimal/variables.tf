@@ -13,7 +13,7 @@ variable "name_prefix" {
   description = "A prefix to add to the names of all created resources."
 }
 
-variable "data_subnet_cidr_blocks" {
+variable "data_subnets_cidr_blocks" {
   type        = list(string)
   description = "The data subnet's CIDR range"
 }
